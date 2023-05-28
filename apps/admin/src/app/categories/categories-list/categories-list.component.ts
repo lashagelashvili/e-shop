@@ -29,7 +29,7 @@ export class CategoriesListComponent implements OnInit {
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         this.categoriesService.deleteCategory(categoryId).subscribe(
-          (response) => {
+          () => {
             this._getCategories();
             this.messageService.add({
               severity: 'success',
@@ -37,7 +37,7 @@ export class CategoriesListComponent implements OnInit {
               detail: 'Category is deleted!',
             });
           },
-          (error) => {
+          () => {
             this.messageService.add({
               severity: 'error',
               summary: 'Error',
@@ -46,8 +46,6 @@ export class CategoriesListComponent implements OnInit {
           }
         );
       },
-      // eslint-disable-next-line @typescript-eslint/no-empty-function
-      reject: () => {},
     });
   }
 
