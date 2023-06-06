@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
-import { appRoutes } from './app.routes';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { ShellComponent } from './shared/shell/shell.component';
 import { SidebarComponent } from './shared/sidebar/sidebar.component';
@@ -36,6 +35,7 @@ import { UsersListComponent } from './pages/users/users-list/users-list.componen
 import { OrdersListComponent } from './pages/orders/orders-list/orders-list.component';
 import { OrdersDetailComponent } from './pages/orders/orders-detail/orders-detail.component';
 import { JwtInterceptor, UsersModule } from '@bluebit/users';
+import { AppRountingModule } from './app-rounting.module';
 
 const UX_MODULE = [
   CardModule,
@@ -73,13 +73,13 @@ const UX_MODULE = [
   ],
   imports: [
     BrowserModule,
-    RouterModule.forRoot(appRoutes, { initialNavigation: 'enabledBlocking' }),
     ...UX_MODULE,
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
     UsersModule,
+    AppRountingModule,
   ],
   providers: [
     MessageService,
