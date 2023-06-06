@@ -13,17 +13,16 @@ import { timer } from 'rxjs';
 })
 export class ProductsFormComponent implements OnInit {
   editMode = false;
+  form: FormGroup;
   isSubmitted = false;
   categories = [];
   imageDisplay: string | ArrayBuffer;
   currentProductId: string;
 
-  form: FormGroup;
-
   constructor(
     private formBuilder: FormBuilder,
+    private productsService: ProductsService,
     private categoriesService: CategoriesService,
-    private productService: ProductsService,
     private messageService: MessageService,
     private location: Location,
     private route: ActivatedRoute
@@ -56,15 +55,14 @@ export class ProductsFormComponent implements OnInit {
   }
 
   private _addProduct(productData: FormData) {
-    this.productService.createProduct(productData).subscribe(
+    this.productsService.createProduct(productData).subscribe(
       (product: Product) => {
         this.messageService.add({
           severity: 'success',
           summary: 'Success',
           detail: `Product ${product.name} is created!`,
         });
-
-        timer(1000)
+        timer(2000)
           .toPromise()
           .then(() => {
             this.location.back();
@@ -80,22 +78,8 @@ export class ProductsFormComponent implements OnInit {
     );
   }
 
-  onImageUpload(event) {
-    const file = event.target.files[0];
-
-    if (file) {
-      this.form.patchValue({ image: file });
-      this.form.get('image').updateValueAndValidity();
-      const fileReader = new FileReader();
-      fileReader.onload = () => {
-        this.imageDisplay = fileReader.result;
-      };
-      fileReader.readAsDataURL(file);
-    }
-  }
-
   private _updateProduct(productFormData: FormData) {
-    this.productService
+    this.productsService
       .updateProduct(productFormData, this.currentProductId)
       .subscribe(
         () => {
@@ -104,8 +88,7 @@ export class ProductsFormComponent implements OnInit {
             summary: 'Success',
             detail: 'Product is updated!',
           });
-
-          timer(1000)
+          timer(2000)
             .toPromise()
             .then(() => {
               this.location.back();
@@ -126,7 +109,7 @@ export class ProductsFormComponent implements OnInit {
       if (params['id']) {
         this.editMode = true;
         this.currentProductId = params['id'];
-        this.productService.getProduct(params['id']).subscribe((product) => {
+        this.productsService.getProduct(params['id']).subscribe((product) => {
           this.productForm['name'].setValue(product.name);
           this.productForm['category'].setValue(product.category.id);
           this.productForm['brand'].setValue(product.brand);
@@ -146,12 +129,11 @@ export class ProductsFormComponent implements OnInit {
   onSubmit() {
     this.isSubmitted = true;
     if (this.form.invalid) return;
-    const productFormData = new FormData();
 
+    const productFormData = new FormData();
     Object.keys(this.productForm).map((key) => {
       productFormData.append(key, this.productForm[key].value);
     });
-
     if (this.editMode) {
       this._updateProduct(productFormData);
     } else {
@@ -161,6 +143,19 @@ export class ProductsFormComponent implements OnInit {
 
   onCancel() {
     this.location.back();
+  }
+
+  onImageUpload(event) {
+    const file = event.target.files[0];
+    if (file) {
+      this.form.patchValue({ image: file });
+      this.form.get('image').updateValueAndValidity();
+      const fileReader = new FileReader();
+      fileReader.onload = () => {
+        this.imageDisplay = fileReader.result;
+      };
+      fileReader.readAsDataURL(file);
+    }
   }
 
   get productForm() {
