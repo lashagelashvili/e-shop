@@ -1,15 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CategoriesService, Category } from '@bluebit/products';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'admin-categories-list',
   templateUrl: './categories-list.component.html',
   styles: [],
 })
-export class CategoriesListComponent implements OnInit {
+export class CategoriesListComponent implements OnInit, OnDestroy {
   categories: Category[] = [];
+  endsubs$: Subject<any> = new Subject();
 
   constructor(
     private categoriesService: CategoriesService,
@@ -20,6 +22,10 @@ export class CategoriesListComponent implements OnInit {
 
   ngOnInit(): void {
     this._getCategories();
+  }
+
+  ngOnDestroy(): void {
+    this.endsubs$.complete();
   }
 
   deleteCategory(categoryId: string) {
@@ -54,8 +60,11 @@ export class CategoriesListComponent implements OnInit {
   }
 
   private _getCategories() {
-    this.categoriesService.getCategories().subscribe((cats) => {
-      this.categories = cats;
-    });
+    this.categoriesService
+      .getCategories()
+      .pipe(takeUntil(this.endsubs$))
+      .subscribe((cats) => {
+        this.categories = cats;
+      });
   }
 }

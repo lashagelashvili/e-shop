@@ -1,16 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { OrdersService } from '@bluebit/orders';
 import { ProductsService } from '@bluebit/products';
 import { UsersService } from '@bluebit/users';
-import { combineLatest } from 'rxjs';
+import { Subject, combineLatest, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'admin-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, OnDestroy {
   statistics = [];
+  endsubs$: Subject<any> = new Subject();
 
   constructor(
     private ordersService: OrdersService,
@@ -24,6 +25,12 @@ export class DashboardComponent implements OnInit {
       this.productService.getProductCount(),
       this.usersService.getUserCount(),
       this.ordersService.getTotalSales(),
-    ]).subscribe((orders) => (this.statistics = orders));
+    ])
+      .pipe(takeUntil(this.endsubs$))
+      .subscribe((orders) => (this.statistics = orders));
+  }
+
+  ngOnDestroy(): void {
+    this.endsubs$.complete();
   }
 }
