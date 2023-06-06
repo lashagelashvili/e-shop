@@ -5,9 +5,6 @@ import { ActivatedRoute } from '@angular/router';
 import { User, UsersService } from '@bluebit/users';
 import { MessageService } from 'primeng/api';
 import { timer } from 'rxjs';
-import * as countriesLib from 'i18n-iso-countries';
-
-declare const require;
 
 @Component({
   selector: 'admin-users-form',
