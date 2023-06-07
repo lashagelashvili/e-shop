@@ -11,6 +11,8 @@ import { UiModule } from '@bluebit/ui';
 
 import { AccordionModule } from 'primeng/accordion';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NavComponent } from './shared/nav/nav.component';
+import { ProductsModule } from '@bluebit/products';
 
 @NgModule({
   declarations: [
@@ -19,6 +21,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ProductListComponent,
     HeaderComponent,
     FooterComponent,
+    NavComponent,
   ],
   imports: [
     BrowserModule,
@@ -26,6 +29,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     UiModule,
     AccordionModule,
     BrowserAnimationsModule,
+    ProductsModule,
+    UiModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
