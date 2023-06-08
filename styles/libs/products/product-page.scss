@@ -1,0 +1,50 @@
+.product {
+  &-name {
+    font-size: 2em;
+  }
+
+  &-desc {
+    font-size: 1.4em;
+  }
+
+  &-rating {
+    margin: 15px 0;
+  }
+
+  &-price {
+    font-size: 1.4em;
+    font-weight: 600;
+    border-bottom: 1px solid var(--surface-300);
+    padding: 25px 0;
+  }
+
+  &-quantity {
+    display: flex;
+    flex-direction: column;
+    margin: 25px 0 ;
+
+    label {
+      font-size: 1.2em;
+      margin-bottom: 10px;
+    }
+
+    .p-button {
+      background-color: $primary-color;
+      border: 0;
+    }
+  }
+
+  &-actions {
+    button {
+      background-color: $primary-color;
+      border: 0;
+    }
+  }
+
+
+}
+
+.product-rich-desc {
+  line-height: 1.6;
+
+}
