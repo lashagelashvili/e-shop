@@ -6,7 +6,7 @@ export class Product {
   description?: string;
   richDescription?: string;
   image?: string;
-  iamges?: string[];
+  images?: string[];
   brand?: string;
   price?: string;
   category?: Category;
