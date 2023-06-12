@@ -18,7 +18,9 @@ export class ProductsFormComponent implements OnInit, OnDestroy {
   categories = [];
   imageDisplay: string | ArrayBuffer;
   currentProductId: string;
-  endsubs$: Subject<any> = new Subject();
+  endsubs$ = new Subject();
+  myFiles = [];
+  images = [];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -49,6 +51,7 @@ export class ProductsFormComponent implements OnInit, OnDestroy {
       description: ['', Validators.required],
       richDescription: [''],
       image: ['', Validators.required],
+      images: [[]],
       isFeatured: [false],
     });
   }
@@ -127,8 +130,10 @@ export class ProductsFormComponent implements OnInit, OnDestroy {
           this.productForm['description'].setValue(product.description);
           this.productForm['richDescription'].setValue(product.richDescription);
           this.imageDisplay = product.image;
+          this.images = product.images;
           this.productForm['image'].setValidators([]);
           this.productForm['image'].updateValueAndValidity();
+          this.productForm['images'].updateValueAndValidity();
         });
       }
     });
@@ -142,6 +147,11 @@ export class ProductsFormComponent implements OnInit, OnDestroy {
     Object.keys(this.productForm).map((key) => {
       productFormData.append(key, this.productForm[key].value);
     });
+
+    for (let i = 0; i < this.myFiles.length; i++) {
+      productFormData.append('images', this.myFiles[i]);
+    }
+
     if (this.editMode) {
       this._updateProduct(productFormData);
     } else {
@@ -164,6 +174,44 @@ export class ProductsFormComponent implements OnInit, OnDestroy {
       };
       fileReader.readAsDataURL(file);
     }
+  }
+
+  onImagesUpload(event) {
+    for (let i = 0; i < event.target.files.length; i++) {
+      this.myFiles.push(event.target.files[i]);
+    }
+
+    this.images = [];
+    const files = event.currentTarget.files;
+    Object.keys(files).forEach((i) => {
+      const file = files[i];
+      const reader = new FileReader();
+      reader.onload = () => {
+        const image = reader.result;
+        this.images.push(image);
+      };
+      reader.readAsDataURL(file);
+    });
+
+    const images = [];
+
+    for (let i = 0; i < event.target.files.length; i++) {
+      images.push(event.target.files[i]);
+    }
+
+    this.form.patchValue({ images: images });
+
+    // // const fileList = event.target.files;
+    // // console.log(fileList);
+
+    // for (const file of this.myFiles) {
+    //   const reader = new FileReader();
+    //   reader.onload = () => {
+    //     console.log(reader.result);
+    //   };
+    //   console.log(file);
+    //   // reader.readAsDataURL(file);
+    // }
   }
 
   get productForm() {
