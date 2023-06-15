@@ -6,7 +6,7 @@ import { Category } from '../../models/category';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'products-list',
+  selector: 'bluebit-products-list',
   templateUrl: './products-list.component.html',
   styles: [],
 })
@@ -36,8 +36,6 @@ export class ProductsListComponent implements OnInit {
   }
 
   private _getProducts(categoriesFilter?: string[]) {
-    console.log(categoriesFilter);
-
     this.productsService.getProducts(categoriesFilter).subscribe((products) => {
       this.products = products;
     });
