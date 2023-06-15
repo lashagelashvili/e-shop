@@ -45,7 +45,7 @@ export class OrdersDetailComponent implements OnInit, OnDestroy {
       if (params['id']) {
         this.orderService.getOrder(params['id']).subscribe((order) => {
           this.order = order;
-          this.selectedStatus = order.status;
+          this.selectedStatus = `${order.status}`;
         });
       }
     });
