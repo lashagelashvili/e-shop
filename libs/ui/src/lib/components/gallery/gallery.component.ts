@@ -6,13 +6,14 @@ import { Component, Input, OnInit } from '@angular/core';
   styles: [],
 })
 export class GalleryComponent implements OnInit {
+  @Input() mainImage = '';
   selectedImageUrl = '';
 
   @Input() images: string[] = [];
 
   ngOnInit(): void {
     if (this.hasImages) {
-      this.selectedImageUrl = this.images[0];
+      this.selectedImageUrl = this.mainImage;
     }
   }
 
