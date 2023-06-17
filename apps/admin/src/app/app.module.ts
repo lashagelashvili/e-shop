@@ -36,6 +36,8 @@ import { OrdersListComponent } from './pages/orders/orders-list/orders-list.comp
 import { OrdersDetailComponent } from './pages/orders/orders-detail/orders-detail.component';
 import { JwtInterceptor, UsersModule } from '@bluebit/users';
 import { AppRountingModule } from './app-rounting.module';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
 
 const UX_MODULE = [
   CardModule,
@@ -75,6 +77,8 @@ const UX_MODULE = [
     BrowserModule,
     ...UX_MODULE,
     HttpClientModule,
+    StoreModule.forRoot({}),
+    EffectsModule.forRoot({}),
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
