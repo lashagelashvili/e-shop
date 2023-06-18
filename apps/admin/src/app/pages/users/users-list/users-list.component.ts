@@ -11,7 +11,7 @@ import { Subject, takeUntil } from 'rxjs';
 })
 export class UsersListComponent implements OnInit, OnDestroy {
   users: User[] = [];
-  endsubs$: Subject<any> = new Subject();
+  endsubs$: Subject<void> = new Subject();
 
   constructor(
     private usersService: UsersService,
@@ -25,6 +25,7 @@ export class UsersListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.endsubs$.next();
     this.endsubs$.complete();
   }
 

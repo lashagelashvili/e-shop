@@ -14,7 +14,7 @@ export class OrdersDetailComponent implements OnInit, OnDestroy {
   order: Order;
   orderStatuses = [];
   selectedStatus: string;
-  endsubs$: Subject<any> = new Subject();
+  endsubs$: Subject<void> = new Subject();
 
   constructor(
     private orderService: OrdersService,
@@ -28,6 +28,7 @@ export class OrdersDetailComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.endsubs$.next();
     this.endsubs$.complete();
   }
 

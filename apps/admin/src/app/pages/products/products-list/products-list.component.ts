@@ -11,7 +11,7 @@ import { Subject, takeUntil } from 'rxjs';
 })
 export class ProductsListComponent implements OnInit, OnDestroy {
   products = [];
-  endsubs$: Subject<any> = new Subject();
+  endsubs$: Subject<void> = new Subject();
 
   constructor(
     private productsService: ProductsService,
@@ -25,6 +25,7 @@ export class ProductsListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.endsubs$.next();
     this.endsubs$.complete();
   }
 

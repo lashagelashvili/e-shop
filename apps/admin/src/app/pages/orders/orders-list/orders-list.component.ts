@@ -13,7 +13,7 @@ import { Subject, takeUntil } from 'rxjs';
 export class OrdersListComponent implements OnInit, OnDestroy {
   orders: Order[] = [];
   orderStatus = ORDER_STATUS;
-  endsubs$: Subject<any> = new Subject();
+  endsubs$: Subject<void> = new Subject();
 
   constructor(
     private ordersService: OrdersService,
@@ -27,6 +27,7 @@ export class OrdersListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.endsubs$.next();
     this.endsubs$.complete();
   }
 
