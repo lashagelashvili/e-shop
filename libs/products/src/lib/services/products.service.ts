@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '@env/environment';
-import { Product } from '../models/product';
+import { Product, ProductCount } from '../models/product';
 
 @Injectable({
   providedIn: 'root',
@@ -39,10 +39,10 @@ export class ProductsService {
     return this.http.delete<object>(`${this.apiURLProducts}/${productId}`);
   }
 
-  getProductCount(): Observable<object> {
+  getProductCount(): Observable<number> {
     return this.http
-      .get<object>(this.apiURLProducts + '/get/count')
-      .pipe(map((res: any) => res.productCount));
+      .get<ProductCount>(this.apiURLProducts + '/get/count')
+      .pipe(map((res: ProductCount) => res.productCount));
   }
 
   getFeaturedProducts(count: number): Observable<Product[]> {
