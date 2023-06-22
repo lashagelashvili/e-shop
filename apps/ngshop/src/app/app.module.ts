@@ -12,11 +12,14 @@ import { AccordionModule } from 'primeng/accordion';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavComponent } from './shared/nav/nav.component';
 import { ProductsModule } from '@bluebit/products';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { OrdersModule } from '@bluebit/orders';
 import { MessagesComponent } from './shared/messages/messages.component';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
+import { JwtInterceptor, UsersModule } from '@bluebit/users';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
 
 @NgModule({
   declarations: [
@@ -38,8 +41,14 @@ import { MessageService } from 'primeng/api';
     UiModule,
     OrdersModule,
     ToastModule,
+    UsersModule,
+    StoreModule.forRoot({}),
+    EffectsModule.forRoot({}),
   ],
-  providers: [MessageService],
+  providers: [
+    MessageService,
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent],
   exports: [MessagesComponent],
 })
