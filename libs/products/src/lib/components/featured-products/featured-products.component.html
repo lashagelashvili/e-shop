@@ -3,7 +3,9 @@
 
   <div class="grid">
     <div class="col-3" *ngFor="let product of featuredProducts">
-      <products-product-item [product]="product"></products-product-item>
+      <bluebit-products-product-item
+        [product]="product"
+      ></bluebit-products-product-item>
     </div>
   </div>
 </div>

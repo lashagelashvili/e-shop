@@ -4,7 +4,7 @@ import { Product } from '../../models/product';
 import { Subject, takeUntil } from 'rxjs';
 
 @Component({
-  selector: 'products-featured-products',
+  selector: 'bluebit-products-featured-products',
   templateUrl: './featured-products.component.html',
   styles: [],
 })

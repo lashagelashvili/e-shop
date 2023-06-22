@@ -4,7 +4,7 @@ import { CategoriesService } from '../../services/categories.service';
 import { Subject, takeUntil } from 'rxjs';
 
 @Component({
-  selector: 'products-categories-banner',
+  selector: 'bluebit-products-categories-banner',
   templateUrl: './categories-banner.component.html',
   styles: [],
 })
