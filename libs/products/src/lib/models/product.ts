@@ -16,3 +16,7 @@ export class Product {
   isFeatured?: boolean;
   dateCreated?: string;
 }
+
+export interface ProductCount {
+  productCount: number;
+}
