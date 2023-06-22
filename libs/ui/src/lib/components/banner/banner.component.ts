@@ -1,11 +1,8 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'ui-banner',
+  selector: 'bluebit-ui-banner',
   templateUrl: './banner.component.html',
-  styles: [
-  ]
+  styles: [],
 })
-export class BannerComponent {
-
-}
+export class BannerComponent {}
