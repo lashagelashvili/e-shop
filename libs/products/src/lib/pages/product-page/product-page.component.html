@@ -1,7 +1,10 @@
 <div class="product-page" *ngIf="product">
   <div class="grid">
     <div class="col-6">
-      <ui-gallery></ui-gallery>
+      <bluebit-ui-gallery
+        [mainImage]="product.image!"
+        [images]="product.images!"
+      ></bluebit-ui-gallery>
     </div>
     <div class="col-6 product">
       <h2 class="product-name">{{ product.name }}</h2>
@@ -17,7 +20,6 @@
       </div>
       <div class="product-price">
         {{ product.price | currency }}
-        <!-- <span class="price-before">{{ product.price + '18' | currency }}</span> -->
       </div>
       <div class="product-quantity">
         <label for="quantity">Quantity</label>
@@ -46,7 +48,7 @@
           type="button"
           label="Add to Cart"
           class="p-button-rounded"
-          (onClick)="addProductToCart()"
+          (click)="addProductToCart()"
         ></button>
       </div>
     </div>
