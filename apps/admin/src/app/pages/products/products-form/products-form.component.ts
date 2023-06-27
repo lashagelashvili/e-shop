@@ -200,18 +200,6 @@ export class ProductsFormComponent implements OnInit, OnDestroy {
     }
 
     this.form.patchValue({ images: images });
-
-    // // const fileList = event.target.files;
-    // // console.log(fileList);
-
-    // for (const file of this.myFiles) {
-    //   const reader = new FileReader();
-    //   reader.onload = () => {
-    //     console.log(reader.result);
-    //   };
-    //   console.log(file);
-    //   // reader.readAsDataURL(file);
-    // }
   }
 
   get productForm() {
