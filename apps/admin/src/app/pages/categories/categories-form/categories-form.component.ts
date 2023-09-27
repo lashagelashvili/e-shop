@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { CategoriesService, Category } from '@bluebit/products';
+import { error } from 'console';
 import { MessageService } from 'primeng/api';
 import { timer } from 'rxjs';
 
@@ -57,8 +58,8 @@ export class CategoriesFormComponent implements OnInit {
   }
 
   private _addCategory(category) {
-    this.categoriesService.createCategory(category).subscribe(
-      (category: Category) => {
+    this.categoriesService.createCategory(category).subscribe({
+      next: (category: Category) => {
         this.messageService.add({
           severity: 'success',
           summary: 'Success',
@@ -71,14 +72,14 @@ export class CategoriesFormComponent implements OnInit {
             this.location.back();
           });
       },
-      () => {
+      error: () => {
         this.messageService.add({
           severity: 'error',
           summary: 'Error',
           detail: 'Category is not created!',
         });
-      }
-    );
+      },
+    });
   }
 
   private _updateCategory(category: Category) {
